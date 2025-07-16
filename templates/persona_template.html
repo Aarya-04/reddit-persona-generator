@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reddit Persona - u/{{ username }}</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #fffdf8;
+            color: #333;
+        }
+
+        .container {
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #d76b1f;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: #444;
+        }
+
+        .columns {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .column {
+            flex: 1 1 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .section:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 350px;
+            background: #f1f1f1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: italic;
+            color: #666;
+            overflow: hidden;
+        }
+
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .subtitle {
+            font-weight: 600;
+            margin-top: 6px;
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        .traits span {
+            background: #f2f2f2;
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin: 4px 6px 4px 0;
+            display: inline-block;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .traits span:hover {
+            background: #ffd4af;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .quote-box {
+            background: #ffe6d0;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            color: #b85d1c;
+            font-style: italic;
+            box-shadow: inset 0 0 0 2px #ffdbb8;
+        }
+
+        .bar-label {
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .bar {
+            width: 100%;
+            background: #eee;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .bar-inner {
+            height: 12px;
+            background: #d76b1f;
+            border-radius: 8px;
+            transition: width 0.4s ease;
+        }
+
+        .full-width {
+            margin-top: 40px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .columns {
+                flex-direction: column;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.25rem;
+            }
+
+            .bar-label {
+                font-size: 0.9rem;
+            }
+
+            .traits span {
+                font-size: 0.85rem;
+            }
+
+            .quote-box {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Reddit Persona: u/{{ username }}</h1>
+
+        <div class="columns">
+            <!-- COLUMN 1 -->
+            <div class="column">
+                <div class="section profile-img">
+                    {% if avatar_url %}
+                    <img src="{{ avatar_url }}" alt="Reddit profile image for {{ username }}" />
+                    {% else %}
+                    <span>No Image</span>
+                    {% endif %}
+                </div>
+
+                <section class="quote-box">
+                    <h2>Quote</h2>
+                    “{{ quote }}”
+                </section>
+
+                <div class="section">
+                    <h2>Personal Info</h2>
+                    <div class="info-row"><span class="key">Age:</span><span class="value">{{ age }}</span></div>
+                    <div class="info-row"><span class="key">Occupation:</span><span class="value">{{ occupation
+                            }}</span></div>
+                    <div class="info-row"><span class="key">Status:</span><span class="value">{{ status }}</span></div>
+                    <div class="info-row"><span class="key">Location:</span><span class="value">{{ location }}</span>
+                    </div>
+                    <div class="info-row"><span class="key">Tier:</span><span class="value">{{ tier }}</span></div>
+                    <div class="info-row"><span class="key">Archetype:</span><span class="value">{{ archetype }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUMN 2 -->
+            <div class="column">
+                <div class="section">
+                    <h2>Behavior & Habits</h2>
+                    <ul>
+                        {% for item in behaviours %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h2>Goals & Needs</h2>
+                    <ul>
+                        {% for goal in goals %}
+                        <li>{{ goal }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h2>Topics Discussed</h2>
+                    <ul>
+                        {% for topic in topics %}
+                        <li>{{ topic }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h2>Traits</h2>
+                    <div class="traits">
+                        {% for trait in traits %}
+                        <span>{{ trait }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUMN 3 -->
+            <div class="column">
+                <div class="section">
+                    <h2>Motivations</h2>
+                    {% if motivations %}
+                    {% for key, score in motivations.items() %}
+                    <div class="bar-label">{{ key }}: {{ score }}</div>
+                    <div class="bar">
+                        <div class="bar-inner" style="width: {{ score }}%;"></div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p>No motivation data available.</p>
+                    {% endif %}
+                </div>
+
+                <div class="section">
+                    <h2>Personality Spectrum</h2>
+                    <p class="bar-label">Introvert — Extrovert</p>
+                    <div class="bar">
+                        <div class="bar-inner" style="width: {{ personality['Introvert-Extrovert'] }}%;"></div>
+                    </div>
+
+                    <p class="bar-label">Intuition — Sensing</p>
+                    <div class="bar">
+                        <div class="bar-inner" style="width: {{ personality['Intuition-Sensing'] }}%;"></div>
+                    </div>
+
+                    <p class="bar-label">Feeling — Thinking</p>
+                    <div class="bar">
+                        <div class="bar-inner" style="width: {{ personality['Feeling-Thinking'] }}%;"></div>
+                    </div>
+
+                    <p class="bar-label">Perceiving — Judging</p>
+                    <div class="bar">
+                        <div class="bar-inner" style="width: {{ personality['Perceiving-Judging'] }}%;"></div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Frustrations</h2>
+                    <ul>
+                        {% for frustration in frustrations %}
+                        <li>{{ frustration }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTTOM SECTION -->
+        <div class="section full-width">
+            <h2>Evidence (Citations)</h2>
+            <ul>
+                {% for item in evidence %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
